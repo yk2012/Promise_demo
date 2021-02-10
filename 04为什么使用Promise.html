@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>为什么使用Promise</title>
+</head>
+<body>
+  <script>
+    // 1. 纯回调的形式
+    // 成功的回调函数
+    function successCallback(result) {
+      console.log("声音文件创建成功：" + result);
+    }
+    // 失败的回调函数
+    function failureCallback(error) {
+      console.log("声音文件创建失败：" + error);
+    }
+    // 必须先指定回调函数，再执行异步任务
+    createAudioFileAsync(audioSettings, successCallback, failureCallback) // 回调函数在执行异步任务（函数）前就要指定
+
+
+    // 2. 使用Promise
+    const promise = createAudioFileAsync(audioSettings);  // 执行2秒
+    setTimeout(() => {
+      promise.then(successCallback, failureCallback) // 也可以获取
+    }, 3000);
+
+
+    // 3. 回调地狱
+    doSomething(function(result) {
+      doSomethingElse(result, function(newResult) {
+        doThirdThing(newResult, function(finalResult) {
+          console.log('Got the final result: ' + finalResult);
+        }, failureCallback);
+      }, failureCallback);
+    }, failureCallback);
+
+
+    // 4. promise 链式回调
+    doSomething().then(function(result) {
+      return doSomethingElse(result);
+    })
+    .then(function(newResult) {
+      return doThirdThing(newResult);
+    })
+    .then(function(finalResult) {
+      console.log('Got the final result: ' + finalResult);
+    })
+    .catch(failureCallback);
+
+    // 使用箭头函数
+    doSomething()
+    .then(result => doSomethingElse(result))
+    .then(newResult => doThirdThing(newResult))
+    .then(finalResult => {
+      console.log(`Got the final result: ${finalResult}`);
+    })
+    .catch(failureCallback);
+
+
+    // 回调地狱的终极解决方案 async/await
+    async function request() {
+      try{
+        const result = await doSomething()
+        const newResult = await doSomethingElse(result)
+        const finalResult = await doThirdThing(newResult)
+        console.log('Got the final result:' + finalResult)
+      } catch (error) {
+      failureCallback(error)
+      }
+    }
+
+
+  </script>
+</body>
+</html>
+
