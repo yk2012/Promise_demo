@@ -9,17 +9,20 @@
 <body>
   <script>
     // 1. 创建一个新的promise对象
-    const p = new Promise((resolve, reject) => { //执行器函数
+    const p = new Promise((resolve, reject) => { // 执行器函数 同步回调
+      console.log('-------------执行 excutor 执行器函数---------------1') // 先执行
       // 2. 执行异步操作任务 
       setTimeout(() => {
+        console.log('-------------异步任务中的回调函数 --------------3')
         const time = Date.now() // 如果当前时间是偶数就代表成功，否则就代表失败
         if (time%2 == 0){// 3.1 如果成功了，调用resolve(value)
-          resolve('成功的数据 time=' + time)    // 成功的回调 成功的数据 time=1612949194514
+          resolve('成功的数据 time=' + time)    // value = '成功的数据 time=' + time
         }else{// 3.2 如果失败了，调用reject(reason)
-          reject('失败的数据 time=' + time)   // 失败的回调 失败的数据 time=1612949218973
+          reject('失败的数据 time=' + time)   // reason = '失败的数据 time=' + time
         }
       }, 1000);
     });
+    console.log('-------------new Promise() 之后--------------2')
 
     p.then(
       value => { // 接收得到成功的value数据  onResolved
