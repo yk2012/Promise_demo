@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromiseAPI</title>
+</head>
+<body>
+  <script>
+    // 一、构造函数、then、catch
+    new Promise((reslove, reject)=>{
+      // 执行异步任务
+      setTimeout(()=>{
+        reslove('成功的数据');
+        // reject('失败的数据');
+      }, 1000);
+    }).then(
+      value => {
+        console.log('onResolved()1', value);
+      }
+    ).catch(
+      reson => {
+        console.log('onRejected()1', reason);
+      }
+    )
+
+
+    // 二、Promise.resolve()、Promise.reject()
+    // 产生一个值为1的promise对象
+    const p1 = new Promise((reslove, reject) => {
+      reslove(1);
+    });
+    const p2 = Promise.resolve(2);
+    const p3 = Promise.reject(3);
+    p1.then(value => {console.log(value)});
+    p2.then(value => {console.log(value)});
+    // p3.then(null, reason => {console.log(reason)});
+    p3.catch(reason => {console.log(reason)});
+
+    // 三、Promise.all()
+    // const pAll = Promise.all([p1, p2, p3]); // 全成功才成功
+    const pAll = Promise.all([p1, p2]);
+
+    pAll.then(
+      values => {console.log('all onResolved()', values)},  // [1, 2] 返回的是成功的数组
+      reason => {console.log('all onRejected()', reason)} // 3 失败的原因
+    )
+
+    // 四、Promise.race()  结果由第一个完成的决定
+    // const pRace = Promise.race([p1, p2, p3])  //结果由第一个完成的决定  1
+    const pRace = Promise.race([p3, p2, p1])  //结果由第一个完成的决定  3   看运行时长
+    pRace.then(
+      value => {console.log('race onResolved()', value)},  // 
+      reason => {console.log('race onRejected()', reason)} // 
+    )
+
+
+    
+
+
+
+  </script>
+</body>
+</html>
