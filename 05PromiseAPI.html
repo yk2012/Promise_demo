@@ -46,6 +46,7 @@
       values => {console.log('all onResolved()', values)},  // [1, 2] 返回的是成功的数组
       reason => {console.log('all onRejected()', reason)} // 3 失败的原因
     )
+    
 
     // 四、Promise.race()  结果由第一个完成的决定
     // const pRace = Promise.race([p1, p2, p3])  //结果由第一个完成的决定  1
@@ -54,11 +55,6 @@
       value => {console.log('race onResolved()', value)},  // 
       reason => {console.log('race onRejected()', reason)} // 
     )
-
-
-    
-
-
 
   </script>
 </body>
