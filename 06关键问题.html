@@ -28,6 +28,22 @@
     )
 
     // 3. 改变promise状态和指定回调函数谁先谁后
+    // 3.1 先指定回调函数
+    new Promise((resolve, reject) => {
+      setTimeout(() => { 
+        resolve(1) // 后改变的状态（同时指定数据），异步执行回调函数
+      }, 1000)
+    }).then( // 先指定回调函数， 保存当前指定的回调函数
+      value => {console.log('value3', value)}, 
+      reason => {console.log('reason3', reason)}
+    )
+    // 3.2 先改变状态
+    new Promise((resolve, reject) => {
+        resolve(1) // 先改变的状态（同时指定数据），异步执行回调函数
+    }).then( // 后指定回调函数， 保存当前指定的回调函数
+      value => {console.log('value4', value)}, 
+      reason => {console.log('reason3', reason)}
+    )
 
 
 
