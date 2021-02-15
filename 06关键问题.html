@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise几个关键问题</title>
+</head>
+<body>
+  <script>
+    // 1. 如何改变promise的状态？ （三种情况）
+    const promise = new Promise((resolve, reject) => {
+      // resolve(1) // promise变为resolved成功状态 value = 1
+      // reject(2) // promise变为rejected失败状态 reason = 2
+      // throw new Error('出错了') // promise变为rejected失败状态， reason为抛出的error
+      throw 3 // promise变为rejected 失败状态 reason = 3
+    })
+
+    // 2. 一个promise指定多个成功/失败回调函数，都会调用吗？  是的！！！都会调用
+    // 当promise改变为对应状态时都会调用
+    promise.then(
+      value => {},
+      reason => {console.log('reason', reason)}
+    )
+    promise.then(
+      value => {},
+      reason => {console.log('reason2', reason)}
+    )
+
+    // 3. 改变promise状态和指定回调函数谁先谁后
+
+
+
+
+  </script>
+</body>
+</html>
