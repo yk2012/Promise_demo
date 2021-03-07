@@ -9,7 +9,33 @@
 <body>
   <script src="./lib/Promise.js"></script>
   <script>
-    
+    const p = new Promise((resolve, reject) => {
+      resolve(1)
+      setTimeout(() => {
+      // resolve(1)
+      reject(2)
+      console.log('状态改变之后')
+      })
+    })
+
+    console.log(p)
+    p.then(
+      value => {
+        console.log('onResolved() 1', value)
+      },
+      reason => {
+        console.log('onRejected() 1', reason)
+      }
+    )
+    p.then(
+      value => {
+        console.log('onResolved() 2', value)
+      },
+      reason => {
+        console.log('onRejected() 2', reason)
+      }
+    )
+
   </script>
 </body>
 </html>
