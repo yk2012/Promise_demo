@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    setTimeout(() => { // 放入宏队列   3
+      console.log('timeout()1');
+      Promise.resolve(5).then(value=>{ // 放入微队列   4
+      console.log('promise resolve()5', value);
+    });
+    }, 0);
+    Promise.resolve(2).then(value=>{ // 放入微队列   1
+      console.log('promise resolve()2', value);
+    });
+    setTimeout(() => { // 放入宏队列  5
+      console.log('timeout()3');
+    }, 0);
+    Promise.resolve(4).then(value=>{ // 放入微队列   2
+      console.log('promise resolve()4', value);
+    });
+    // 11宏队列与微队列.html:18 promise resolve()2 2
+    // 11宏队列与微队列.html:24 promise resolve()4 4
+    // 11宏队列与微队列.html:12 timeout()1
+    // 11宏队列与微队列.html:14 promise resolve()5 5
+    // 11宏队列与微队列.html:21 timeout()3
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>同步与异步</title>
+</head>
+<body>
+  <button onclick="updateSync()">同步</button>
+  <button onclick="updateAsync()">异步</button>
+  <div id="output"></div>
+
+  <script>
+    function updateSync() {
+      for (var i = 0; i < 500; i++) {
+        document.getElementById('output').innerHTML = i;
+      }
+    }
+    function updateAsync() {
+      var i = 0;
+      function updateLater() {
+        document.getElementById('output').innerHTML = (i++);
+        if (i < 500) {
+          setTimeout(updateLater, 0);
+        }
+      }
+      updateLater();
+    }
+  </script>
+</body>
+</html>
