@@ -7,34 +7,70 @@
   <title>自定义Promise</title>
 </head>
 <body>
-  <script src="./lib/Promise.js"></script>
+  <!-- <script src="./lib/Promise.js"></script> -->
   <script>
-    const p = new Promise((resolve, reject) => {
-      resolve(1)
-      setTimeout(() => {
-      // resolve(1)
-      reject(2)
-      console.log('状态改变之后')
-      })
-    })
+    // const p = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //   // resolve(1)
+    //   reject(2)
+    //   console.log('状态改变之后')
+    //   })
+    // }).then(
+    //   value => {
+    //     console.log('onResolved() 1', value)
+        
+    //   },
+    //   reason => {
+    //     console.log('onRejected() 1', reason)
+    //     // return 3
+    //     // throw 4
+    //     return new Promise((resolve, reject) => {reject(4)})
+    //   }
+    // ).then(
+    //   value => {
+    //     console.log('onResolved() 2', value)
+    //   },
+    //   reason => {
+    //     console.log('onRejected() 2', reason)
+    //     throw 5
+    //   }
+    // ).catch(
+    //   reason => {
+    //     console.log('onRejected() 3', reason)
+    //     return new Promise(()=>{})
+    //   }
+    // ).then(
+    //   value => {
+    //     console.log('onResolved() 4', value)
+    //   },
+    //   reason => {
+    //     console.log('onRejected() 4', reason)
+    //   }
+    // )
 
+    // const p1 = Promise.resolve(2)
+    // p1.then(value => {
+    //   console.log('p1', value)
+    // })
+    // const p2 = Promise.resolve(Promise.resolve(3))
+    // p2.then(value => {
+    //   console.log('p2', value)
+    // })
+    // const p3 = Promise.resolve(Promise.reject(4))
+    // p3.catch(reason => {
+    //   console.log('p3', reason)   
+    // })
+
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(()=> {
+        resolve(1)
+      })
+      
+    })
+    const p2 = Promise.resolve(2)
+    const p3 = Promise.reject(3) 
+    const p = Promise.race([p1, p2,p3]);
     console.log(p)
-    p.then(
-      value => {
-        console.log('onResolved() 1', value)
-      },
-      reason => {
-        console.log('onRejected() 1', reason)
-      }
-    )
-    p.then(
-      value => {
-        console.log('onResolved() 2', value)
-      },
-      reason => {
-        console.log('onRejected() 2', reason)
-      }
-    )
 
   </script>
 </body>
